@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Parte 1: Criar 2 pastas e criar 3 arquivos
+echo "Criando pasta origem e destino e 3 arquivos dentro da pasta origem"
+mkdir -p origem destino
+cd origem
+touch arquivo1 arquivo2 arquivo3
+cd ..
+
+# Parte 2: Criar variáveis de ambiente para os diretórios
+echo "Criando variáveis de ambiente para as pastas origem e destino"
+export pastadestino=$(pwd)/destino
+export pastaorigem=$(pwd)/origem
+
+# Parte 3: Criar um arquivo log
+echo "Realizando copia dos arquivos da pasta origem para pasta destino e encremento o .log"
+cp -r $pastaorigem/* $pastadestino
+echo "Copia de arquivos realizada em $(date)" >> desafio01.log
+
+# Parte 4: Criar um arquivo compactado dos documentos da pasta destino
+echo "Criando arquivo compactado dos arquivos que estão dentro da pasta destino"
+cd $pastadestino
+tar -czvf ../compactado.tar.gz *
+cd ..
+echo "Gerado arquivo compactado de backup em $(date)" >> desafio01.log
+
+# Parte 5: Apagar arquivos da pasta origem
+echo "Apagando arquivos dentro da pasta origem"
+rm -rf $pastaorigem/*
+echo "Arquivos removidos da pasta de origem em $(date)" >> desafio01.log
